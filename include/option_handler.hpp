@@ -14,6 +14,7 @@ namespace option_handler {
         std::filesystem::path& convertImgPath,
         size_t& width,
         unsigned char& threshold,
+        bool& help,
         WOut&& warningsOut) 
     {   
         if (argc == 1) {
@@ -25,21 +26,28 @@ namespace option_handler {
             strcpy_s(buf, WIN_MAX_PATH, argv[i]);
             if (std::strstr(buf, "-f") && i < argc - 1) {
                 strcpy_s(buf, WIN_MAX_PATH, argv[++i]);
-                convertImgPath = buf;
+                std::stringstream ss;
+                ss << buf;
+                ss >> convertImgPath;
             } else if (std::strstr(buf, "-w") && i < argc - 1) {
                 strcpy_s(buf, WIN_MAX_PATH, argv[++i]);
                 std::stringstream ss;
                 ss << buf;
-                buf >> width;
-            } else if (std::strstr(buf, "-d") && i < argc - 1) {
+                ss >> width;
+            } else if (std::strstr(buf, "-t") && i < argc - 1) {
                 strcpy_s(buf, WIN_MAX_PATH, argv[++i]);
                 std::stringstream ss;
                 ss << buf;
-                buf >> width;
+                ss >> threshold;
+            } else if (std::strstr(buf, "-h")) {
+                help = true;
+                return;
             } else if (buf[0] == '-') {
                 warningsOut << std::format("Unknown option: {}", buf);
             } else {
-                imgPath = buf;
+                std::stringstream ss;
+                ss << buf;
+                ss >> imgPath;
             }
 
         }

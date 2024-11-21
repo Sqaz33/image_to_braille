@@ -10,7 +10,7 @@ find_package(OpenCV CONFIG REQUIRED)
 file(GLOB_RECURSE SRC "src/*.cpp")
 file(GLOB_RECURSE INCLUDE "include/*.hpp")
 
-add_executable(main ${SRC} ${INCLUDE})
+add_executable(img2Braille ${SRC} ${INCLUDE})
 
-target_link_libraries(main PRIVATE ${OpenCV_LIBS})
+target_link_libraries(img2Braille PRIVATE ${OpenCV_LIBS})
 
